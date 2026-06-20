@@ -32,5 +32,3 @@ enum Gender: String, Codable {
     case genderless = "Genderless"
     case unknown = "Unknown"
 }
-
-

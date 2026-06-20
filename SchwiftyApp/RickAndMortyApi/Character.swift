@@ -69,3 +69,20 @@ extension Character {
         let results: [Character]
     }
 }
+
+extension Character {
+    static let mock = Character(
+        id: 1,
+        name: "Rick Sanchez",
+        status: .alive,
+        species: "Human",
+        type: "",
+        gender: .male,
+        origin: LocationSummary(name: "Earth (C-137)", url: URL(string: "https://rickandmortyapi.com/api/location/1")!),
+        location: LocationSummary(name: "Citadel of Ricks", url: URL(string: "https://rickandmortyapi.com/api/location/3")!),
+        image: URL(string: "https://rickandmortyapi.com/api/character/avatar/1.jpeg")!,
+        episode: (1...51).map { URL(string: "https://rickandmortyapi.com/api/episode/\($0)")! },
+        url: URL(string: "https://rickandmortyapi.com/api/character/1")!,
+        created: "2017-11-04T18:48:46Z"
+    )
+}

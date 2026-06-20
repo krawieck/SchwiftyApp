@@ -28,7 +28,7 @@ extension RickAndMortyApi {
     func getCharacters(filtered: Character.Request.Filters) async throws -> Character.Response {
         return try await getCharacters(with: .init(ids: [], filters: filtered))
     }
-    
+
 }
 
 extension RickAndMortyApi {
