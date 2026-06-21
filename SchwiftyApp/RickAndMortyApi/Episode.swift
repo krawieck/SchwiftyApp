@@ -7,19 +7,24 @@
 
 import Foundation
 
-struct Episode: Codable, Identifiable {
+struct Episode: Codable, Identifiable, Equatable {
     let id: Int
     let name: String
+    /// Month Day, Year
     let air_date: String
+    /// S00E00
     let episode: String
-    let characters: [URL]
-    let url: URL
+    /// URL
+    let characters: [String]
+    /// URL
+    let url: String
     let created: String
 }
 
 extension Episode {
     struct Request: Codable {
         let ids: [Int]
+        let page: Int?
         let filters: Filters
 
         struct Filters: Codable {
@@ -46,7 +51,11 @@ extension Episode {
             guard var components = URLComponents(url: endpoint.appendingPathComponent(idJoined), resolvingAgainstBaseURL: false) else {
                 throw URLError(.badURL)
             }
-            components.queryItems = filters.asQueryItems
+            var queryItems = filters.asQueryItems
+            if let page {
+                queryItems.append(URLQueryItem(name: "page", value: "\(page)"))
+            }
+            components.queryItems = queryItems
             guard let url = components.url else {
                 throw URLError(.badURL)
             }
@@ -67,8 +76,8 @@ extension Episode {
         air_date: "December 2, 2013",
         episode: "S01E01",
         characters: [1, 2, 35, 38, 62, 92, 127, 144, 158, 175, 179, 181, 239, 249, 271, 338, 394, 395, 435]
-            .map { URL(string: "https://rickandmortyapi.com/api/character/\($0)")! },
-        url: URL(string: "https://rickandmortyapi.com/api/episode/1")!,
+            .map { "https://rickandmortyapi.com/api/character/\($0)" },
+        url: "https://rickandmortyapi.com/api/episode/1",
         created: "2017-11-10T12:56:33.798Z"
     )
 }

@@ -6,19 +6,23 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct CharacterDetailsView: View {
-    let character: Character
+    let store: StoreOf<CharacterDetailsFeature>
     
     var body: some View {
         List {
             HStack {
                 Spacer()
                 VStack(alignment: .center) {
-                    AsyncImage(url: character.image)
-                        .cornerRadius(15)
-                    Text("\(character.name)").font(Font.title.bold())
-                    Text("\(character.species)").font(Font.callout)
+                    AsyncImage(url: URL(string: store.character.image)) { image in
+                        image
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    Text("\(store.character.name)").font(Font.title.bold())
+                    Text("\(store.character.species)").font(Font.callout)
                 }.frame(alignment: .center)
                 Spacer()
             }
@@ -30,47 +34,47 @@ struct CharacterDetailsView: View {
                     Image(systemName: "person.text.rectangle")
                     Text("Name:")
                     Spacer()
-                    Text(character.name)
+                    Text(store.character.name)
                 }
                 HStack {
                     Image(systemName: "heart")
                     Text("Status:")
                     Spacer()
-                    Text(character.status.rawValue)
+                    Text(store.character.status.rawValue)
                 }
                 HStack {
                     Image(systemName: "pawprint")
                     Text("Species:")
                     Spacer()
-                    Text(character.species)
+                    Text(store.character.species)
                 }
                  HStack {
                     Image(systemName: "person")
                     Text("Gender:")
                     Spacer()
-                    Text(character.gender.rawValue)
+                    Text(store.character.gender.rawValue)
                 }
                 HStack {
                     Image(systemName: "globe")
                     Text("Origin:")
                     Spacer()
-                    Text(character.origin.name)
+                    Text(store.character.origin.name)
                 }
                 HStack {
                     Image(systemName: "mappin.and.ellipse")
                     Text("Location:")
                     Spacer()
-                    Text(character.location.name)
+                    Text(store.character.location.name)
                 }
                 HStack {
                     Image(systemName: "tv")
                     Text("Episodes:")
                     Spacer()
-                    Text("\(character.episode.count)")
+                    Text("\(store.character.episode.count)")
                 }
             }
             
-            EpisodeListSection(episodeLinks: character.episode)
+            EpisodeListSection(store: store)
         }.toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
@@ -79,14 +83,21 @@ struct CharacterDetailsView: View {
                     Label("Favorite", systemImage: "star")
                 }
             }
+        }.onAppear {
+            store.send(.start)
         }
     }
 }
 
 
-
 #Preview {
     NavigationStack {
-        CharacterDetailsView(character: Character.mock)
+        CharacterDetailsView(
+            store: Store(
+                initialState: CharacterDetailsFeature.State(character: Character.mock)
+            ) {
+                CharacterDetailsFeature()
+            }
+        )
     }
 }

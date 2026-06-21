@@ -1,0 +1,66 @@
+//
+//  CharacterDetailsFeature.swift
+//  SchwiftyApp
+//
+//  Created by Filip Krawczyk on 21/06/2026.
+//
+
+import ComposableArchitecture
+import Foundation
+
+@Reducer
+struct CharacterDetailsFeature {
+    
+    
+    @ObservableState
+    struct State: Equatable {
+        let character: Character
+        var episodes: [Episode]? = nil
+        var fetchEpisodesFailMessage: String? = nil
+        var isFetchingEpisodes = false
+    }
+    enum Action {
+        case fetchEpisodes
+        case fetchEpisodesDone([Episode])
+        case fetchEpisodesFailure(String)
+        case goToEpisode
+        case start
+    }
+
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+
+            case .fetchEpisodes:
+                state.fetchEpisodesFailMessage = nil
+                state.isFetchingEpisodes = true
+                let episodeIds: [Int] = state.character.episodeNumbers
+                return .run { [episodeIds = episodeIds] send in
+                    do {
+                        let episodes = try await RickAndMortyApi.shared.getEpisodes(by: episodeIds)
+                        return await send(.fetchEpisodesDone(episodes))
+                    } catch {
+                        return await send(
+                            .fetchEpisodesFailure(error.localizedDescription)
+                        )
+                    }
+                }
+            case .fetchEpisodesDone(let episodes):
+                state.isFetchingEpisodes = false
+                state.episodes = episodes
+                return .none
+            case .fetchEpisodesFailure(let message):
+                state.isFetchingEpisodes = true
+                state.fetchEpisodesFailMessage = message
+                return .none
+            case .goToEpisode:
+                // TODO: implement
+                return .none
+            case .start:
+                return .send(.fetchEpisodes)
+            }
+            
+        }
+    }
+}
+

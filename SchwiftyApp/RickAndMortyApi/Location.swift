@@ -12,14 +12,17 @@ struct Location: Codable, Identifiable {
     let name: String
     let type: String
     let dimension: String
-    let residents: [URL]
-    let url: URL
+    /// URL
+    let residents: [String]
+    /// URL
+    let url: String
     let created: String
 }
 
 extension Location {
     struct Request: Codable {
         let ids: [Int]
+        let page: Int?
         let filters: Filters
 
         struct Filters: Codable {
@@ -46,7 +49,11 @@ extension Location {
             guard var components = URLComponents(url: endpoint.appendingPathComponent(idJoined), resolvingAgainstBaseURL: false) else {
                 throw URLError(.badURL)
             }
-            components.queryItems = filters.asQueryItems
+            var queryItems = filters.asQueryItems
+            if let page {
+                queryItems.append(URLQueryItem(name: "page", value: "\(page)"))
+            }
+            components.queryItems = queryItems
             guard let url = components.url else {
                 throw URLError(.badURL)
             }
@@ -68,8 +75,8 @@ extension Location {
         type: "Planet",
         dimension: "Dimension C-137",
         residents: [38, 45, 71, 82, 83, 92, 112, 114, 116, 117, 120, 127, 155, 169, 175, 179, 186, 201, 216, 239, 271, 302, 303, 338, 343, 356, 394]
-            .map { URL(string: "https://rickandmortyapi.com/api/character/\($0)")! },
-        url: URL(string: "https://rickandmortyapi.com/api/location/1")!,
+            .map { "https://rickandmortyapi.com/api/character/\($0)" },
+        url: "https://rickandmortyapi.com/api/location/1",
         created: "2017-11-10T12:42:04.162Z"
     )
 }

@@ -11,29 +11,32 @@ struct CharacterListItem: View {
     let character: Character
     
     var body: some View {
-        NavigationLink {
-            CharacterDetailsView(character: character)
-        } label: {
-            
-            HStack{
-                AsyncImage(url: character.image) { image in
-                    image
-                        .resizable()
-                        .scaledToFit()
-                } placeholder: {
-                    ProgressView()
-                }.frame(width: 50, height: 50)
-            
+        
+        
+        HStack{
+            // TODO: uncomment after adding caching to images
+            //                AsyncImage(url: URL(string: character.image)) { image in
+            //                    image
+            //                        .resizable()
+            //                        .scaledToFit()
+            //                } placeholder: {
+            //                    ProgressView()
+            //                }.frame(width: 50, height: 50)
+            Label {
                 VStack(alignment: .leading) {
                     Text(character.name)
                         .font(.headline)
                     Text(character.species)
                         .font(.subheadline)
                 }
+            } icon: {
+                EmptyView()
             }
             
         }
+        
     }
+    
 }
 
 #Preview {

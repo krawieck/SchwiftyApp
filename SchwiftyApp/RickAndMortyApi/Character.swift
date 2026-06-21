@@ -7,7 +7,22 @@
 
 import Foundation
 
-struct Character: Codable, Identifiable {
+struct Character: Codable, Identifiable, Equatable {
+    static func == (lhs: Character, rhs: Character) -> Bool {
+        lhs.id == rhs.id &&
+        lhs.name == rhs.name &&
+        lhs.status == rhs.status &&
+        lhs.species == rhs.species &&
+        lhs.type == rhs.type &&
+        lhs.gender == rhs.gender &&
+        lhs.origin == rhs.origin &&
+        lhs.location == rhs.location &&
+        lhs.image == rhs.image &&
+        lhs.episode == rhs.episode &&
+        lhs.url == rhs.url &&
+        lhs.created == rhs.created
+    }
+
     let id: Int
     let name: String
     let status: Status
@@ -16,17 +31,26 @@ struct Character: Codable, Identifiable {
     let gender: Gender
     let origin: LocationSummary
     let location: LocationSummary
-    let image: URL
-    let episode: [URL]
-    let url: URL
+    /// URL
+    let image: String
+    /// URL
+    let episode: [String]
+    let url: String
     let created: String
+}
+
+extension Character {
+    var episodeNumbers: [Int] {
+        episode.compactMap { $0.split(separator: "/").last.flatMap { Int($0) } }
+    }
 }
 
 extension Character {
     struct Request: Codable {
         let ids: [Int]
+        let page: Int?
         let filters: Filters
-        
+         
         struct Filters: Codable {
             let name: String?
             let status: Status?
@@ -55,7 +79,11 @@ extension Character {
             guard var components = URLComponents(url: endpoint.appendingPathComponent(idJoined), resolvingAgainstBaseURL: false) else {
                 throw URLError(.badURL)
             }
-            components.queryItems = filters.asQueryItems
+            var queryItems = filters.asQueryItems
+            if let page {
+                queryItems.append(URLQueryItem(name: "page", value: "\(page)"))
+            }
+            components.queryItems = queryItems
             guard let url = components.url else {
                 throw URLError(.badURL)
             }
@@ -78,11 +106,11 @@ extension Character {
         species: "Human",
         type: "",
         gender: .male,
-        origin: LocationSummary(name: "Earth (C-137)", url: URL(string: "https://rickandmortyapi.com/api/location/1")!),
-        location: LocationSummary(name: "Citadel of Ricks", url: URL(string: "https://rickandmortyapi.com/api/location/3")!),
-        image: URL(string: "https://rickandmortyapi.com/api/character/avatar/1.jpeg")!,
-        episode: (1...51).map { URL(string: "https://rickandmortyapi.com/api/episode/\($0)")! },
-        url: URL(string: "https://rickandmortyapi.com/api/character/1")!,
+        origin: LocationSummary(name: "Earth (C-137)", url: "https://rickandmortyapi.com/api/location/1"),
+        location: LocationSummary(name: "Citadel of Ricks", url: "https://rickandmortyapi.com/api/location/3"),
+        image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+        episode: (1...51).map { "https://rickandmortyapi.com/api/episode/\($0)" },
+        url: "https://rickandmortyapi.com/api/character/1",
         created: "2017-11-04T18:48:46Z"
     )
 }

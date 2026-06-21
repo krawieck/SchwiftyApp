@@ -10,25 +10,27 @@ import Foundation
 struct Info: Codable {
     let count: Int
     let pages: Int
-    let next: URL?
-    let prev: URL?
+    /// URL
+    let next: String?
+    /// URL
+    let prev: String?
 }
 
-struct LocationSummary: Codable {
+struct LocationSummary: Codable, Equatable {
     let name: String
-    let url: URL
+    let url: String?
 }
 
 
 enum Status: String, Codable {
     case alive = "Alive"
     case dead = "Dead"
-    case unknown = "Unknown"
+    case unknown = "unknown"
 }
 
 enum Gender: String, Codable {
     case female = "Female"
     case male = "Male"
     case genderless = "Genderless"
-    case unknown = "Unknown"
+    case unknown = "unknown"
 }

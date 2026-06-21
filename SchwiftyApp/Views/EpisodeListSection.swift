@@ -6,19 +6,66 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct EpisodeListSection: View {
-    let episodeLinks: [URL]
+    let store: StoreOf<CharacterDetailsFeature>
+    
     var body: some View {
         Section("Episodes") {
-            ProgressView()
+            if let episodes = store.episodes {
+                ForEach(episodes) { episode in
+                    Text(episode.name)
+                }
+            } else if let fetchEpisodesFailMessage = store.fetchEpisodesFailMessage {
+                
+                HStack {
+                    Text(fetchEpisodesFailMessage)
+                    Spacer()
+                    Button("Retry") {
+                        store.send(.fetchEpisodes)
+                    }.buttonStyle(.bordered)
+                }
+            } else if store.isFetchingEpisodes {
+                HStack() {
+                    Spacer()
+                    ProgressView()
+                    Spacer()
+                }.frame(height: 80)
+            } else {
+                Text("unreachable")
+            }
         }
     }
 }
 
 
-#Preview {
+#Preview("With episodes") {
     List {
-        EpisodeListSection(episodeLinks: Character.mock.episode)
+        EpisodeListSection(
+            store: Store(
+                initialState: CharacterDetailsFeature.State(
+                    character: .mock,
+                    episodes: [.mock]
+                )
+            ) {
+                CharacterDetailsFeature()
+            }
+        )
+    }
+}
+
+#Preview("Fail state") {
+    List {
+        EpisodeListSection(
+            store: Store(
+                initialState: CharacterDetailsFeature.State(
+                    character: .mock,
+                    fetchEpisodesFailMessage: "Failed to fetch episodes"
+                )
+            ) {
+                CharacterDetailsFeature()
+            }
+        )
     }
 }
