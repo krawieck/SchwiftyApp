@@ -9,13 +9,15 @@ import SwiftUI
 import ComposableArchitecture
 
 struct EpisodeListSection: View {
-    let store: StoreOf<CharacterDetailsFeature>
+    @Bindable var store: StoreOf<CharacterDetailsFeature>
     
     var body: some View {
         Section("Episodes") {
             if let episodes = store.episodes {
                 ForEach(episodes) { episode in
-                    Text(episode.name)
+                    Button(episode.name) {
+                        store.send(.goToEpisodeDetails(episode))
+                    }.foregroundStyle(.foreground)
                 }
             } else if let fetchEpisodesFailMessage = store.fetchEpisodesFailMessage {
                 
@@ -33,7 +35,7 @@ struct EpisodeListSection: View {
                     Spacer()
                 }.frame(height: 80)
             } else {
-                Text("unreachable")
+                Text("this text should never appear")
             }
         }
     }

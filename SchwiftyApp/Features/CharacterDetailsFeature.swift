@@ -10,28 +10,32 @@ import Foundation
 
 @Reducer
 struct CharacterDetailsFeature {
-    
-    
     @ObservableState
     struct State: Equatable {
         let character: Character
         var episodes: [Episode]? = nil
         var fetchEpisodesFailMessage: String? = nil
         var isFetchingEpisodes = false
+        
+        @Presents var episodeDetails: EpisodeFeature.State?
     }
     enum Action {
         case fetchEpisodes
         case fetchEpisodesDone([Episode])
         case fetchEpisodesFailure(String)
-        case goToEpisode
         case start
+        
+        case episodeDetails(PresentationAction<EpisodeFeature.Action>)
+        case goToEpisodeDetails(Episode)
     }
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-
             case .fetchEpisodes:
+                if state.isFetchingEpisodes || state.episodes != nil {
+                    return .none
+                }
                 state.fetchEpisodesFailMessage = nil
                 state.isFetchingEpisodes = true
                 let episodeIds: [Int] = state.character.episodeNumbers
@@ -53,13 +57,18 @@ struct CharacterDetailsFeature {
                 state.isFetchingEpisodes = true
                 state.fetchEpisodesFailMessage = message
                 return .none
-            case .goToEpisode:
-                // TODO: implement
-                return .none
             case .start:
                 return .send(.fetchEpisodes)
+            case .episodeDetails:
+                return .none
+            case .goToEpisodeDetails(let episode):
+                state.episodeDetails = EpisodeFeature.State(episode: episode)
+                return .none
             }
             
+        }
+        .ifLet(\.$episodeDetails, action: \.episodeDetails) {
+            EpisodeFeature()
         }
     }
 }

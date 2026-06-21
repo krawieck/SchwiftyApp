@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct CharacterDetailsView: View {
-    let store: StoreOf<CharacterDetailsFeature>
+    @Bindable var store: StoreOf<CharacterDetailsFeature>
     
     var body: some View {
         List {
@@ -75,7 +75,13 @@ struct CharacterDetailsView: View {
             }
             
             EpisodeListSection(store: store)
-        }.toolbar {
+        }
+            .navigationDestination(
+                item: $store.scope(\.episodeDetails, action: \.episodeDetails)
+            ) { store in
+                EpisodeDetailsView(store: store)
+            }
+        .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     

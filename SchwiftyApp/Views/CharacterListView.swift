@@ -27,16 +27,14 @@ struct CharacterListView: View {
                     }
                     .contentShape(Rectangle())
                 }
-                .buttonStyle(.plain)
-                .padding(.vertical, 5)
-                .listRowSeparator(.visible)
+                .foregroundStyle(.foreground)
             }
-            
            
             LoadMoreView(store: store)
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)
-        }.navigationDestination(
+        }
+        .navigationDestination(
             item: $store
                 .scope(\.characterDetails, action: \.characterDetails)
         ) { store in
