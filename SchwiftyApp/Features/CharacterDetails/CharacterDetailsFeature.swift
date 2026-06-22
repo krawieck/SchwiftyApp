@@ -50,7 +50,6 @@ struct CharacterDetailsFeature {
                         let episodes = try await RickAndMortyApi.shared.getEpisodes(by: episodeIds)
                         return await send(.fetchEpisodesDone(episodes))
                     } catch {
-                        
                         return await send(
                             .fetchEpisodesFailure(error.localizedDescription)
                         )

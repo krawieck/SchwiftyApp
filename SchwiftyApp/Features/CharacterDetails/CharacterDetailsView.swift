@@ -10,25 +10,11 @@ import ComposableArchitecture
 
 struct CharacterDetailsView: View {
     @Bindable var store: StoreOf<CharacterDetailsFeature>
-    
+
     var body: some View {
         List {
-            HStack {
-                Spacer()
-                VStack(alignment: .center) {
-                    AsyncImage(url: URL(string: store.character.image)) { image in
-                        image
-                    } placeholder: {
-                        ProgressView()
-                    }
-                    Text("\(store.character.name)").font(Font.title.bold())
-                    Text("\(store.character.species)").font(Font.callout)
-                }.frame(alignment: .center)
-                Spacer()
-            }
-            .listRowInsets(EdgeInsets())
-            .listRowBackground(Color.clear)
-            .listRowSeparator(.hidden)
+            header
+            
             Section("Data sheet") {
                 DataSheetItem("Name", store.character.name, icon: "person.text.rectangle")
                 DataSheetItem("Status", store.character.status.rawValue, icon: "heart")
@@ -60,7 +46,26 @@ struct CharacterDetailsView: View {
         }
     }
     
-    var episodeListSection: some View {
+    fileprivate var header: some View {
+        HStack {
+            Spacer()
+            VStack(alignment: .center) {
+                AsyncImage(url: URL(string: store.character.image)) { image in
+                    image
+                } placeholder: {
+                    ProgressView()
+                }
+                Text("\(store.character.name)").font(Font.title.bold())
+                Text("\(store.character.species)").font(Font.callout)
+            }.frame(alignment: .center)
+            Spacer()
+        }
+        .listRowInsets(EdgeInsets())
+        .listRowBackground(Color.clear)
+        .listRowSeparator(.hidden)
+    }
+    
+    fileprivate var episodeListSection: some View {
         Section("Episodes") {
             if let episodes = store.episodes {
                 ForEach(episodes) { episode in

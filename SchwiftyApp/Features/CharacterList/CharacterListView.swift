@@ -48,7 +48,7 @@ struct CharacterListView: View {
         }
     }
     
-    func characterListItem(_ character: Character) -> some View {
+    fileprivate func characterListItem(_ character: Character) -> some View {
         Button {
             store.send(.goToCharacter(character: character))
         } label: {
@@ -79,7 +79,7 @@ struct CharacterListView: View {
     }
 }
 
-struct LoadMoreView: View {
+fileprivate struct LoadMoreView: View {
     let store: StoreOf<CharacterList>
     var body: some View {
         if let fetchingError = store.fetchingError  {

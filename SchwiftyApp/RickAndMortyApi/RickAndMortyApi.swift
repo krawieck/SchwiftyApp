@@ -14,7 +14,6 @@ class RickAndMortyApi {
 }
 
 extension RickAndMortyApi {
-    // FIXME: hacky solution for now. make better if time allows
     private func decodeByIds<T: Decodable>(_ data: Data, count: Int) throws -> [T] {
         let decoder = JSONDecoder()
         if count == 1 {
