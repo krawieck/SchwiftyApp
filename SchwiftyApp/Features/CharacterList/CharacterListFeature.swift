@@ -18,18 +18,21 @@ struct CharacterList {
         var page = 1
         var canFetchMore: Bool = true
         var characters: [Character] = []
+        @Shared(.favorites) var favorites: IdentifiedArrayOf<Character> = []
         
         @Presents var characterDetails: CharacterDetailsFeature.State?
     }
     enum Action {
         case fetchCharacters
-        case charactersFetched(data: Character.Response)
+        case fetchCharactersDone(data: Character.Response)
+        case fetchCharacteresFailure(String)
         case goToCharacter(character: Character)
         case characterDetails(PresentationAction<CharacterDetailsFeature.Action>)
-        case charactersFetchFailure(String)
         case scrolledToTheBottom
         case start
         case refresh
+        
+        case removeFromFavorites(Character)
     }
 
     var body: some Reducer<State, Action> {
@@ -45,10 +48,10 @@ struct CharacterList {
                 return .run { [page = state.page] send in
                     do {
                         let response = try await RickAndMortyApi.shared.getCharacters(on: page)
-                        return await send(.charactersFetched(data: response))
+                        return await send(.fetchCharactersDone(data: response))
                     } catch {
                         print("failed to fetch characters: \(error)")
-                        return await send(.charactersFetchFailure(error.localizedDescription))
+                        return await send(.fetchCharacteresFailure(error.localizedDescription))
                     }
 
                 }
@@ -61,7 +64,7 @@ struct CharacterList {
                 state.canFetchMore = true
                 state.fetchingError = nil
                 return .send(.fetchCharacters)
-            case .charactersFetched(data: let data):
+            case .fetchCharactersDone(data: let data):
                 state.fetching = false
                 state.page += 1
                 state.characters.append(contentsOf: data.results)
@@ -73,7 +76,7 @@ struct CharacterList {
                 return .none
             case .characterDetails:
                 return .none
-            case .charactersFetchFailure(let message):
+            case .fetchCharacteresFailure(let message):
                 state.fetching = false
                 state.fetchingError = message
                 return .none
@@ -81,6 +84,11 @@ struct CharacterList {
                 return .send(.fetchCharacters)
             case .start:
                 return .send(.fetchCharacters)
+            case .removeFromFavorites(let character):
+                state.$favorites.withLock { favorites in
+                    favorites.removeAll(where: { $0.id == character.id })
+                }
+                return .none
             }
         }
         .ifLet(\.$characterDetails, action: \.characterDetails) {

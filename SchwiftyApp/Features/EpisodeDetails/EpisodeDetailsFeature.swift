@@ -9,7 +9,7 @@ import ComposableArchitecture
 import Foundation
 
 @Reducer
-struct EpisodeFeature {
+struct EpisodeDetailsFeature {
     @ObservableState
     struct State: Equatable {
         let episode: Episode

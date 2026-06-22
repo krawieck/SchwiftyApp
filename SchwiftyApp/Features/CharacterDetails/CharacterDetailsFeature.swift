@@ -16,8 +16,12 @@ struct CharacterDetailsFeature {
         var episodes: [Episode]? = nil
         var fetchEpisodesFailMessage: String? = nil
         var isFetchingEpisodes = false
+        @Shared(.favorites) var favorites: IdentifiedArrayOf<Character> = []
+        var isFavorite: Bool {
+            favorites.contains(character)
+        }
         
-        @Presents var episodeDetails: EpisodeFeature.State?
+        @Presents var episodeDetails: EpisodeDetailsFeature.State?
     }
     enum Action {
         case fetchEpisodes
@@ -25,8 +29,10 @@ struct CharacterDetailsFeature {
         case fetchEpisodesFailure(String)
         case start
         
-        case episodeDetails(PresentationAction<EpisodeFeature.Action>)
+        case episodeDetails(PresentationAction<EpisodeDetailsFeature.Action>)
         case goToEpisodeDetails(Episode)
+        
+        case toggleFavorite
     }
 
     var body: some Reducer<State, Action> {
@@ -44,6 +50,7 @@ struct CharacterDetailsFeature {
                         let episodes = try await RickAndMortyApi.shared.getEpisodes(by: episodeIds)
                         return await send(.fetchEpisodesDone(episodes))
                     } catch {
+                        
                         return await send(
                             .fetchEpisodesFailure(error.localizedDescription)
                         )
@@ -62,13 +69,17 @@ struct CharacterDetailsFeature {
             case .episodeDetails:
                 return .none
             case .goToEpisodeDetails(let episode):
-                state.episodeDetails = EpisodeFeature.State(episode: episode)
+                state.episodeDetails = EpisodeDetailsFeature.State(episode: episode)
                 return .none
+            case .toggleFavorite:
+                state.$favorites.withLock { $0.toggleFavorite(state.character) }
+                return .none
+
             }
             
         }
         .ifLet(\.$episodeDetails, action: \.episodeDetails) {
-            EpisodeFeature()
+            EpisodeDetailsFeature()
         }
     }
 }
