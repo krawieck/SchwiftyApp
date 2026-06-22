@@ -21,3 +21,11 @@ struct ErrorBox: View {
         }
     }
 }
+
+#Preview {
+    List {
+        ErrorBox(message: "Something went wrong while fetching characters.") {
+            
+        }
+    }
+}

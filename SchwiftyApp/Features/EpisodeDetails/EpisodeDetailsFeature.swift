@@ -10,6 +10,8 @@ import Foundation
 
 @Reducer
 struct EpisodeDetailsFeature {
+    @Dependency(\.apiClient) var apiClient
+    
     @ObservableState
     struct State: Equatable {
         let episode: Episode
@@ -39,7 +41,7 @@ struct EpisodeDetailsFeature {
                 }
                 return .run { [characterIds = characterIds] send in
                     do {
-                        let characters = try await RickAndMortyApi.shared.getCharacters(by: characterIds)
+                        let characters = try await apiClient.getCharacters(by: characterIds)
                         return await send(.fetchCharactersDone(characters))
                     } catch {
                         return await send(

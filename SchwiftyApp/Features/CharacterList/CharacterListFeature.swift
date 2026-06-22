@@ -11,6 +11,8 @@ import ComposableArchitecture
 
 @Reducer
 struct CharacterList {
+    @Dependency(\.apiClient) var apiClient
+    
     @ObservableState
     struct State: Equatable {
         var fetching: Bool = false
@@ -47,7 +49,7 @@ struct CharacterList {
                 print("fetching page \(state.page)")
                 return .run { [page = state.page] send in
                     do {
-                        let response = try await RickAndMortyApi.shared.getCharacters(on: page)
+                        let response = try await apiClient.getCharacters(on: page)
                         return await send(.fetchCharactersDone(data: response))
                     } catch {
                         print("failed to fetch characters: \(error)")

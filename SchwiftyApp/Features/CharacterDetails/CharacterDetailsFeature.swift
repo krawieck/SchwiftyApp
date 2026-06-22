@@ -10,6 +10,8 @@ import Foundation
 
 @Reducer
 struct CharacterDetailsFeature {
+    @Dependency(\.apiClient) var apiClient
+    
     @ObservableState
     struct State: Equatable {
         let character: Character
@@ -47,7 +49,7 @@ struct CharacterDetailsFeature {
                 let episodeIds: [Int] = state.character.episodeNumbers
                 return .run { [episodeIds = episodeIds] send in
                     do {
-                        let episodes = try await RickAndMortyApi.shared.getEpisodes(by: episodeIds)
+                        let episodes = try await apiClient.getEpisodes(by: episodeIds)
                         return await send(.fetchEpisodesDone(episodes))
                     } catch {
                         return await send(
@@ -73,9 +75,7 @@ struct CharacterDetailsFeature {
             case .toggleFavorite:
                 state.$favorites.withLock { $0.toggleFavorite(state.character) }
                 return .none
-
             }
-            
         }
         .ifLet(\.$episodeDetails, action: \.episodeDetails) {
             EpisodeDetailsFeature()

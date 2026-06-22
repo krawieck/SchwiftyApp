@@ -105,7 +105,7 @@ fileprivate struct LoadMoreView: View {
     NavigationStack {
         CharacterListView(
             store: Store(
-                initialState: CharacterList.State(characters: [.mock])
+                initialState: CharacterList.State()
             ) {
                 CharacterList()
             }
@@ -129,7 +129,7 @@ fileprivate struct LoadMoreView: View {
     NavigationStack {
         CharacterListView(
             store: Store(
-                initialState: CharacterList.State(fetching: true, characters: [.mock, .mock, .mock, .mock, .mock, .mock, .mock, .mock, .mock, .mock, .mock, .mock, .mock, .mock])
+                initialState: CharacterList.State(fetching: true, characters: [.mock, .mock, .mock, .mock, .mock, .mock, .mock, .mock])
             ) {
                 CharacterList()
             }
