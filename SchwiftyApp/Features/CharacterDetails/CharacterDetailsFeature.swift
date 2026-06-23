@@ -62,7 +62,7 @@ struct CharacterDetailsFeature {
                 state.episodes = episodes
                 return .none
             case .fetchEpisodesFailure(let message):
-                state.isFetchingEpisodes = true
+                state.isFetchingEpisodes = false
                 state.fetchEpisodesFailMessage = message
                 return .none
             case .start:

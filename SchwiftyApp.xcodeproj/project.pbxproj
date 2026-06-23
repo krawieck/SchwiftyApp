@@ -10,11 +10,27 @@
 		7B8DE3A82FE5F5FF00C409C7 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8DE3A72FE5F5FF00C409C7 /* ComposableArchitecture */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		7B6999FF2FE9D88B0003A49C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7BFD2A312FE1ECAB009FC303 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7BFD2A382FE1ECAB009FC303;
+			remoteInfo = SchwiftyApp;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		7B6999FB2FE9D88B0003A49C /* SchwiftyAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SchwiftyAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BFD2A392FE1ECAB009FC303 /* SchwiftyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SchwiftyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		7B6999FC2FE9D88B0003A49C /* SchwiftyAppTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SchwiftyAppTests;
+			sourceTree = "<group>";
+		};
 		7BFD2A3B2FE1ECAB009FC303 /* SchwiftyApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = SchwiftyApp;
@@ -23,6 +39,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		7B6999F82FE9D88B0003A49C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7BFD2A362FE1ECAB009FC303 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -38,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				7BFD2A3B2FE1ECAB009FC303 /* SchwiftyApp */,
+				7B6999FC2FE9D88B0003A49C /* SchwiftyAppTests */,
 				7BFD2A3A2FE1ECAB009FC303 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -46,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				7BFD2A392FE1ECAB009FC303 /* SchwiftyApp.app */,
+				7B6999FB2FE9D88B0003A49C /* SchwiftyAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -53,6 +78,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		7B6999FA2FE9D88B0003A49C /* SchwiftyAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7B699A032FE9D88B0003A49C /* Build configuration list for PBXNativeTarget "SchwiftyAppTests" */;
+			buildPhases = (
+				7B6999F72FE9D88B0003A49C /* Sources */,
+				7B6999F82FE9D88B0003A49C /* Frameworks */,
+				7B6999F92FE9D88B0003A49C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7B699A002FE9D88B0003A49C /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				7B6999FC2FE9D88B0003A49C /* SchwiftyAppTests */,
+			);
+			name = SchwiftyAppTests;
+			packageProductDependencies = (
+			);
+			productName = SchwiftyAppTests;
+			productReference = 7B6999FB2FE9D88B0003A49C /* SchwiftyAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		7BFD2A382FE1ECAB009FC303 /* SchwiftyApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7BFD2A442FE1ECAC009FC303 /* Build configuration list for PBXNativeTarget "SchwiftyApp" */;
@@ -86,6 +134,10 @@
 				LastSwiftUpdateCheck = 2650;
 				LastUpgradeCheck = 2650;
 				TargetAttributes = {
+					7B6999FA2FE9D88B0003A49C = {
+						CreatedOnToolsVersion = 26.5;
+						TestTargetID = 7BFD2A382FE1ECAB009FC303;
+					};
 					7BFD2A382FE1ECAB009FC303 = {
 						CreatedOnToolsVersion = 26.5;
 					};
@@ -109,11 +161,19 @@
 			projectRoot = "";
 			targets = (
 				7BFD2A382FE1ECAB009FC303 /* SchwiftyApp */,
+				7B6999FA2FE9D88B0003A49C /* SchwiftyAppTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		7B6999F92FE9D88B0003A49C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7BFD2A372FE1ECAB009FC303 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,6 +184,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		7B6999F72FE9D88B0003A49C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7BFD2A352FE1ECAB009FC303 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -133,7 +200,62 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		7B699A002FE9D88B0003A49C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7BFD2A382FE1ECAB009FC303 /* SchwiftyApp */;
+			targetProxy = 7B6999FF2FE9D88B0003A49C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		7B699A012FE9D88B0003A49C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NMDSW6KGG7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = krawieck.SchwiftyAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SchwiftyApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SchwiftyApp";
+			};
+			name = Debug;
+		};
+		7B699A022FE9D88B0003A49C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NMDSW6KGG7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = krawieck.SchwiftyAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SchwiftyApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SchwiftyApp";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		7BFD2A422FE1ECAC009FC303 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -345,6 +467,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		7B699A032FE9D88B0003A49C /* Build configuration list for PBXNativeTarget "SchwiftyAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7B699A012FE9D88B0003A49C /* Debug */,
+				7B699A022FE9D88B0003A49C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		7BFD2A342FE1ECAB009FC303 /* Build configuration list for PBXProject "SchwiftyApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
