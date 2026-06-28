@@ -22,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		7B6999FB2FE9D88B0003A49C /* SchwiftyAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SchwiftyAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B699AA32FF121370003A49C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7BFD2A392FE1ECAB009FC303 /* SchwiftyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SchwiftyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -60,6 +61,7 @@
 		7BFD2A302FE1ECAB009FC303 = {
 			isa = PBXGroup;
 			children = (
+				7B699AA32FF121370003A49C /* README.md */,
 				7BFD2A3B2FE1ECAB009FC303 /* SchwiftyApp */,
 				7B6999FC2FE9D88B0003A49C /* SchwiftyAppTests */,
 				7BFD2A3A2FE1ECAB009FC303 /* Products */,
