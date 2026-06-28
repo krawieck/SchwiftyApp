@@ -18,12 +18,16 @@ struct EpisodeDetailsFeature {
         var characters: [Character]? = nil
         var fetchCharactersFailMessage: String? = nil
         var isFetchingCharacters = false
+        
+        @Presents var characterDetails: CharacterDetailsFeature.State?
     }
     enum Action {
         case fetchCharacters
         case fetchCharactersDone([Character])
         case fetchCharactersFailure(String)
         case start
+        case goToCharacter(character: Character)
+        case characterDetails(PresentationAction<CharacterDetailsFeature.Action>)
     }
     
     var body: some Reducer<State, Action> {
@@ -59,8 +63,18 @@ struct EpisodeDetailsFeature {
                 return .none
             case .start:
                 return .send(.fetchCharacters)
+                
+            case .goToCharacter(character: let character):
+                state.characterDetails = CharacterDetailsFeature.State(character: character)
+                return .none
+            case .characterDetails:
+                return .none
             }
+              
             
+        }
+        .ifLet(\.$characterDetails, action: \.characterDetails) {
+            CharacterDetailsFeature()
         }
     }
 }

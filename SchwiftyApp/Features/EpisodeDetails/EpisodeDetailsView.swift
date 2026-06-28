@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct EpisodeDetailsView: View {
-    var store: StoreOf<EpisodeDetailsFeature>
+    @Bindable var store: StoreOf<EpisodeDetailsFeature>
     
     var body: some View {
         List {
@@ -20,7 +20,10 @@ struct EpisodeDetailsView: View {
             Section("Characters") {
                 if let characters = store.characters {
                     ForEach(characters) { character in
-                        Text(character.name)
+                        Button(character.name) {
+                            store.send(.goToCharacter(character: character))
+                        }.foregroundStyle(.foreground)
+                            
                     }
                 } else if store.isFetchingCharacters {
                     ProgressView().frame(maxWidth: .infinity, idealHeight: 150)
@@ -31,6 +34,12 @@ struct EpisodeDetailsView: View {
         }.navigationTitle("\(store.episode.episode)")
             .onAppear {
                 store.send(.start)
+            }
+            .navigationDestination(
+                item: $store
+                    .scope(\.characterDetails, action: \.characterDetails)
+            ) { store in
+                CharacterDetailsView(store: store)
             }
     }
 }
