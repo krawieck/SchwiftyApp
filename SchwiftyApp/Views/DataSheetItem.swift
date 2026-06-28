@@ -19,9 +19,9 @@ struct DataSheetItem: View {
     }
     
     var body: some View {
-        
         HStack {
             Image(systemName: icon)
+                .frame(minWidth: 40)
             Text("\(key):")
             Spacer()
             Text(value)
