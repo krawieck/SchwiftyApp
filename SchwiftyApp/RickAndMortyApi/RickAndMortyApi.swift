@@ -12,6 +12,8 @@ class RickAndMortyApi {
     static let urlSession: URLSession = .shared
     static let baseURL: URL = URL(string: "https://rickandmortyapi.com/api")!
 
+    static let imageSize: CGFloat = 300
+    
     func getCharacters(with request: Character.Request) async throws -> Character.Response {
         let url = try request.url(for: Self.baseURL.appendingPathComponent("character"))
         print(url)

@@ -53,8 +53,20 @@ struct CharacterDetailsView: View {
                 AsyncImage(url: URL(string: store.character.image)) { image in
                     image
                 } placeholder: {
-                    ProgressView()
-                }
+                    ZStack {
+                        Rectangle()
+                            .fill(
+                                Gradient(
+                                    colors: [
+                                        .blue.opacity(0.6),
+                                        .blue.opacity(0.2)
+                                    ]
+                                )
+                            )
+                        ProgressView()
+                    }
+                    .frame(width: RickAndMortyApi.imageSize, height: RickAndMortyApi.imageSize)
+                }.cornerRadius(10.0)
                 Text("\(store.character.name)").font(Font.title.bold())
                 Text("\(store.character.species)").font(Font.callout)
             }.frame(alignment: .center)
@@ -129,6 +141,33 @@ struct CharacterDetailsView: View {
                     character: Character.mock,
                     fetchEpisodesFailMessage: "Something went wrong while fetching episodes."
                 )
+            ) {
+                CharacterDetailsFeature()
+            }
+        )
+    }
+}
+
+#Preview("Image placeholder") {
+    var character = Character.mock
+    character = Character(
+        id: character.id,
+        name: character.name,
+        status: character.status,
+        species: character.species,
+        type: character.type,
+        gender: character.gender,
+        origin: character.origin,
+        location: character.location,
+        image: "",
+        episode: character.episode,
+        url: character.url,
+        created: character.created
+    )
+    return NavigationStack {
+        CharacterDetailsView(
+            store: Store(
+                initialState: CharacterDetailsFeature.State(character: character)
             ) {
                 CharacterDetailsFeature()
             }
